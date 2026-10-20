@@ -158,3 +158,8 @@ Needs git, cmake, gcc, cargo, python3 and perl. libvterm needs about
 - `bin/`: the scripts to fetch, build and run.
 
 Third-party code and licenses are listed in [THIRD_PARTY.md](THIRD_PARTY.md).
+
+## License
+
+Apache-2.0 ([LICENSE](LICENSE)), except `inputs/doomfire.py`, which follows
+DOOM-fire-zig and is GPL-3.0-or-later (see [THIRD_PARTY.md](THIRD_PARTY.md)).
