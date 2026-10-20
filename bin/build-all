@@ -1,0 +1,36 @@
+#!/bin/bash
+# Build goose at its pinned commit, the three rows into $OUT/bin, and the
+# conformance cases into $OUT/cases.
+set -euo pipefail
+source "$(dirname "$0")/env.sh"
+mkdir -p "$OUT/bin"
+
+if [ ! -x "$GOOSE" ] || [ "$(git -C "$DEPS/goose" rev-parse HEAD)" != "$GOOSE_COMMIT" ]; then
+  [ "$(git -C "$DEPS/goose" rev-parse HEAD 2>/dev/null)" = "$GOOSE_COMMIT" ] || fetch_repo goose aardappel/goose "$GOOSE_COMMIT"
+  log "goose @ ${GOOSE_COMMIT:0:7}: Release build"
+  cmake -S "$DEPS/goose" -B "$DEPS/goose/build" -DCMAKE_BUILD_TYPE=Release > "$OUT/goose-build.log" 2>&1
+  cmake --build "$DEPS/goose/build" --config Release -j >> "$OUT/goose-build.log" 2>&1 \
+    || { tail -30 "$OUT/goose-build.log"; exit 1; }
+fi
+
+log "libvterm @ ${LIBVTERM_COMMIT:0:7}: gcc -O2"
+fetch_repo libvterm neovim/libvterm "$LIBVTERM_COMMIT"
+V=$DEPS/libvterm
+mkdir -p "$V/build"
+for t in "$V"/src/encoding/*.tbl; do
+  perl -CSD "$V/tbl2inc_c.pl" "$t" > "${t%.tbl}.inc"
+done
+for c in "$V"/src/*.c; do
+  gcc -O2 -DNDEBUG -std=c99 -I"$V/include" -c "$c" -o "$V/build/$(basename "${c%.c}").o"
+done
+rm -f "$V/build/libvterm.a"
+ar rcs "$V/build/libvterm.a" "$V"/build/*.o
+
+log "rows"
+gcc -O2 -DNDEBUG -I"$V/include" "$ROOT/baselines/libvterm_row.c" "$V/build/libvterm.a" -o "$OUT/bin/libvterm_row"
+cargo build -q --release --manifest-path "$ROOT/baselines/alacritty_row/Cargo.toml"
+cp "$ROOT/baselines/alacritty_row/target/release/alacritty_row" "$OUT/bin/"
+"$GOOSE" build "$ROOT/core/vt_row.goose" -O2 --cc gcc -o "$OUT/bin/vt_goose" > /dev/null
+
+python3 -I "$ROOT/tests/cases.py" "$OUT/cases"
+log "built $OUT/bin: $(ls "$OUT/bin" | tr '\n' ' ')"

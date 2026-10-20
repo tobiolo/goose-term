@@ -1,0 +1,38 @@
+#!/bin/bash
+# Download and generate every input into $INPUTS, then check them against
+# inputs/sha256.txt (bin/fetch-inputs --update rewrites that file instead).
+set -euo pipefail
+source "$(dirname "$0")/env.sh"
+mkdir -p "$INPUTS"
+fetch_repo vtebench alacritty/vtebench "$VTEBENCH_COMMIT"
+fetch_repo terminal-benchmark vizenc/terminal-benchmark "$TERMBENCH_COMMIT"
+
+log "shakespeare: vizenc/terminal-benchmark's test/shakespeare.txt"
+cp "$DEPS/terminal-benchmark/test/shakespeare.txt" "$INPUTS/shakespeare.txt"
+
+for b in dense_cells light_cells medium_cells sync_medium_cells cursor_motion unicode \
+         scrolling scrolling_fullscreen scrolling_bottom_region scrolling_bottom_small_region \
+         scrolling_top_region scrolling_top_small_region; do
+  [ -f "$INPUTS/vtebench_$b.bin" ] && [ "${FORCE:-0}" = 0 ] && continue
+  python3 -I "$ROOT/inputs/capture.py" "$DEPS/vtebench/benchmarks/$b" "$INPUTS/vtebench_$b.bin" --cols "$COLS" --rows "$ROWS"
+done
+
+log "doomfire: DOOM-fire-zig's byte stream, 250 frames"
+python3 -I "$ROOT/inputs/doomfire.py" "$INPUTS/doomfire.bin" --cols "$COLS" --rows "$ROWS" --frames 250
+
+log "gitlog: git log -p --stat --color=always of goose at its pinned commit"
+[ -d "$DEPS/goose/.git" ] || fetch_repo goose aardappel/goose "$GOOSE_COMMIT"
+if ! git -C "$DEPS/goose" cat-file -e "$GOOSE_COMMIT~400" 2>/dev/null; then
+  git -C "$DEPS/goose" fetch -q --deepen 400 origin "$GOOSE_COMMIT" || git -C "$DEPS/goose" fetch -q --unshallow origin
+fi
+git -C "$DEPS/goose" -c color.ui=always -c core.pager=cat log -p --stat --color=always -n 400 "$GOOSE_COMMIT" \
+  | head -c 33554432 | sed 's/$/\r/' > "$INPUTS/gitlog.bin"
+
+cd "$INPUTS"
+if [ "${1:-}" = --update ]; then
+  sha256sum *.txt *.bin > "$ROOT/inputs/sha256.txt"
+  log "wrote inputs/sha256.txt"
+else
+  sha256sum -c --quiet "$ROOT/inputs/sha256.txt" && log "all inputs match inputs/sha256.txt"
+fi
+ls -la "$INPUTS"

@@ -1,0 +1,15 @@
+[package]
+name = "alacritty_row"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+alacritty_terminal = "=0.26.0"
+unicode-width = "=0.2.2"  # alacritty_terminal 0.26's; --width-table writes core/width.bin from it
+
+# Alacritty's own release profile (opt-level 3, thin LTO), without its debug info.
+[profile.release]
+lto = "thin"
+incremental = false
+
+[workspace]

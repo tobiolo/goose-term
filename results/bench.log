@@ -1,0 +1,15 @@
+doomfire                                 alacritty 0.137s 31.1MB  libvterm 0.193s 30.7MB  goose 0.139s 32.7MB
+gitlog                                   alacritty 0.266s 62.4MB  libvterm 2.520s 88.3MB  goose 0.108s 25.9MB
+shakespeare                              alacritty 0.195s 53.7MB  libvterm 2.484s 79.7MB  goose 0.070s 17.0MB
+vtebench_cursor_motion                   alacritty 0.083s 20.1MB  libvterm 0.110s 19.7MB  goose 0.072s 20.5MB
+vtebench_dense_cells                     alacritty 0.086s 21.0MB  libvterm 0.101s 20.6MB (differs)  goose 0.094s 22.7MB
+vtebench_light_cells                     alacritty 0.086s 19.0MB  libvterm 0.248s 18.6MB  goose 0.016s 20.5MB
+vtebench_medium_cells                    alacritty 0.106s 22.8MB  libvterm 0.270s 18.8MB  goose 0.066s 20.9MB
+vtebench_scrolling                       alacritty 0.170s 59.0MB  libvterm 31.518s 85.0MB  goose 0.215s 21.2MB
+vtebench_scrolling_bottom_region         alacritty 0.121s 18.8MB  libvterm 23.166s 18.4MB  goose 0.149s 20.6MB
+vtebench_scrolling_bottom_small_region   alacritty 0.299s 18.8MB  libvterm 12.248s 18.4MB  goose 0.140s 20.5MB
+vtebench_scrolling_fullscreen            alacritty 0.195s 59.0MB  libvterm 1.462s 84.9MB  goose 0.067s 32.0MB
+vtebench_scrolling_top_region            alacritty 0.460s 18.8MB  libvterm 22.985s 18.5MB  goose 0.147s 20.6MB
+vtebench_scrolling_top_small_region      alacritty 0.279s 18.8MB  libvterm 13.383s 18.4MB  goose 0.138s 18.5MB
+vtebench_sync_medium_cells               alacritty 0.113s 23.1MB  libvterm 0.267s 19.0MB  goose 0.067s 20.9MB
+vtebench_unicode                         alacritty 0.087s 18.9MB  libvterm 0.430s 18.6MB (differs)  goose 0.093s 20.7MB

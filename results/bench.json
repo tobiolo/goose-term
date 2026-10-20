@@ -1,0 +1,592 @@
+{
+ "runs": 5,
+ "cpu": 2,
+ "extra": "",
+ "results": [
+  {
+   "input": "doomfire",
+   "bytes": 29588571,
+   "rows": {
+    "alacritty": {
+     "median": 0.13668014199902245,
+     "min": 0.13582986899928073,
+     "max": 0.1368226729991875,
+     "user": 0.129491,
+     "sys": 0.0059629999999999996,
+     "maxrss_kb": 31800,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 29588571\nsize 39 174\ncursor 38 0\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 9231288670747521997\nscreen_attr 12013706854367599866\n"
+    },
+    "libvterm": {
+     "median": 0.1931253189995914,
+     "min": 0.19255308900028467,
+     "max": 0.19362421699952392,
+     "user": 0.186446,
+     "sys": 0.005961,
+     "maxrss_kb": 31420,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 29588571\nsize 39 174\ncursor 38 0\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 9231288670747521997\nscreen_attr 12013706854367599866\n"
+    },
+    "goose": {
+     "median": 0.13925657200161368,
+     "min": 0.13760615600040182,
+     "max": 0.13988391200109618,
+     "user": 0.13208699999999998,
+     "sys": 0.005983,
+     "maxrss_kb": 33452,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 29588571\nsize 39 174\ncursor 38 0\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 9231288670747521997\nscreen_attr 12013706854367599866\n"
+    }
+   }
+  },
+  {
+   "input": "gitlog",
+   "bytes": 20295854,
+   "rows": {
+    "alacritty": {
+     "median": 0.2656069939985173,
+     "min": 0.263781960000415,
+     "max": 0.2686169019998488,
+     "user": 0.245751,
+     "sys": 0.017816,
+     "maxrss_kb": 63920,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 20295854\nsize 39 174\ncursor 38 0\nhistory 10000\nhistory_text 13104115598147369494\nhistory_attr 16419185613024817297\nscreen_text 581618467926267735\nscreen_attr 14673176777034454441\n"
+    },
+    "libvterm": {
+     "median": 2.5201006490005966,
+     "min": 2.499855607000427,
+     "max": 2.7281235850005032,
+     "user": 2.49311,
+     "sys": 0.022905,
+     "maxrss_kb": 90384,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 20295854\nsize 39 174\ncursor 38 0\nhistory 10000\nhistory_text 13104115598147369494\nhistory_attr 16419185613024817297\nscreen_text 581618467926267735\nscreen_attr 14673176777034454441\n"
+    },
+    "goose": {
+     "median": 0.10766210399924603,
+     "min": 0.10677352499988046,
+     "max": 0.10905655500027933,
+     "user": 0.10107,
+     "sys": 0.006927,
+     "maxrss_kb": 26484,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 20295854\nsize 39 174\ncursor 38 0\nhistory 10000\nhistory_text 13104115598147369494\nhistory_attr 16419185613024817297\nscreen_text 581618467926267735\nscreen_attr 14673176777034454441\n"
+    }
+   }
+  },
+  {
+   "input": "shakespeare",
+   "bytes": 11237271,
+   "rows": {
+    "alacritty": {
+     "median": 0.19536471599894867,
+     "min": 0.19144592700104113,
+     "max": 0.20011377000082575,
+     "user": 0.18309,
+     "sys": 0.01292,
+     "maxrss_kb": 55024,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 11237271\nsize 39 174\ncursor 38 0\nhistory 10000\nhistory_text 17123494594288424233\nhistory_attr 6744219726344980933\nscreen_text 13378492684123535343\nscreen_attr 8185496540351009663\n"
+    },
+    "libvterm": {
+     "median": 2.483597378999548,
+     "min": 2.4795707049997873,
+     "max": 2.4935352640004567,
+     "user": 2.453627,
+     "sys": 0.024902,
+     "maxrss_kb": 81596,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 11237271\nsize 39 174\ncursor 38 0\nhistory 10000\nhistory_text 17123494594288424233\nhistory_attr 6744219726344980933\nscreen_text 13378492684123535343\nscreen_attr 8185496540351009663\n"
+    },
+    "goose": {
+     "median": 0.06951500200011651,
+     "min": 0.06889743000101589,
+     "max": 0.07025777799935895,
+     "user": 0.06555799999999999,
+     "sys": 0.003949,
+     "maxrss_kb": 17436,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 11237271\nsize 39 174\ncursor 38 0\nhistory 10000\nhistory_text 17123494594288424233\nhistory_attr 6744219726344980933\nscreen_text 13378492684123535343\nscreen_attr 8185496540351009663\n"
+    }
+   }
+  },
+  {
+   "input": "vtebench_cursor_motion",
+   "bytes": 18116098,
+   "rows": {
+    "alacritty": {
+     "median": 0.08318986499944003,
+     "min": 0.08276690099955886,
+     "max": 0.08499538800060691,
+     "user": 0.078599,
+     "sys": 0.004004,
+     "maxrss_kb": 20576,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 18116098\nsize 39 174\ncursor 19 21\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 13973244663021093245\nscreen_attr 8185496540351009663\n"
+    },
+    "libvterm": {
+     "median": 0.11044968900023378,
+     "min": 0.10990248699999938,
+     "max": 0.11193169800026226,
+     "user": 0.105808,
+     "sys": 0.003984,
+     "maxrss_kb": 20156,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 18116098\nsize 39 174\ncursor 19 21\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 13973244663021093245\nscreen_attr 8185496540351009663\n"
+    },
+    "goose": {
+     "median": 0.07168156300031114,
+     "min": 0.07110460700096155,
+     "max": 0.07255554999937885,
+     "user": 0.066892,
+     "sys": 0.0049,
+     "maxrss_kb": 21008,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 18116098\nsize 39 174\ncursor 19 21\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 13973244663021093245\nscreen_attr 8185496540351009663\n"
+    }
+   }
+  },
+  {
+   "input": "vtebench_dense_cells",
+   "bytes": 19055408,
+   "rows": {
+    "alacritty": {
+     "median": 0.08590199800164555,
+     "min": 0.08571242499965592,
+     "max": 0.08722703899911721,
+     "user": 0.081546,
+     "sys": 0.0039759999999999995,
+     "maxrss_kb": 21508,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 19055408\nsize 39 174\ncursor 38 173\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 13973244663021093245\nscreen_attr 18108608580487110420\n"
+    },
+    "libvterm": {
+     "median": 0.10086607199991704,
+     "min": 0.10041488000024401,
+     "max": 0.10401806499976374,
+     "user": 0.096314,
+     "sys": 0.003981,
+     "maxrss_kb": 21076,
+     "ok": true,
+     "agrees": false,
+     "checksums": "bytes 19055408\nsize 39 174\ncursor 38 173\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 13973244663021093245\nscreen_attr 130004964169726279\n"
+    },
+    "goose": {
+     "median": 0.09445079999932204,
+     "min": 0.09421093099990685,
+     "max": 0.09556882200013206,
+     "user": 0.088847,
+     "sys": 0.004998,
+     "maxrss_kb": 23200,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 19055408\nsize 39 174\ncursor 38 173\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 13973244663021093245\nscreen_attr 18108608580487110420\n"
+    }
+   }
+  },
+  {
+   "input": "vtebench_light_cells",
+   "bytes": 16945352,
+   "rows": {
+    "alacritty": {
+     "median": 0.08560534000025655,
+     "min": 0.08477643600053852,
+     "max": 0.08740305200080911,
+     "user": 0.081136,
+     "sys": 0.003987,
+     "maxrss_kb": 19412,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16945352\nsize 39 174\ncursor 38 173\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 13973244663021093245\nscreen_attr 8185496540351009663\n"
+    },
+    "libvterm": {
+     "median": 0.247845824000251,
+     "min": 0.24743780800054083,
+     "max": 0.24824776500099688,
+     "user": 0.243146,
+     "sys": 0.003966,
+     "maxrss_kb": 19016,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16945352\nsize 39 174\ncursor 38 173\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 13973244663021093245\nscreen_attr 8185496540351009663\n"
+    },
+    "goose": {
+     "median": 0.015500618999794824,
+     "min": 0.01539884100020572,
+     "max": 0.016005636000045342,
+     "user": 0.011011,
+     "sys": 0.004020999999999999,
+     "maxrss_kb": 20984,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16945352\nsize 39 174\ncursor 38 173\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 13973244663021093245\nscreen_attr 8185496540351009663\n"
+    }
+   }
+  },
+  {
+   "input": "vtebench_medium_cells",
+   "bytes": 16803534,
+   "rows": {
+    "alacritty": {
+     "median": 0.10627273799946124,
+     "min": 0.10546920700107876,
+     "max": 0.10721236800054612,
+     "user": 0.100696,
+     "sys": 0.005007999999999999,
+     "maxrss_kb": 23344,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16803534\nsize 39 174\ncursor 38 0\nhistory 57\nhistory_text 5819565767479237678\nhistory_attr 4529729176837719461\nscreen_text 16511751771086170865\nscreen_attr 3965673657374801803\n"
+    },
+    "libvterm": {
+     "median": 0.26987258900044253,
+     "min": 0.26881047599999874,
+     "max": 0.27149422699949355,
+     "user": 0.265222,
+     "sys": 0.003944,
+     "maxrss_kb": 19260,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16803534\nsize 39 174\ncursor 38 0\nhistory 57\nhistory_text 5819565767479237678\nhistory_attr 4529729176837719461\nscreen_text 16511751771086170865\nscreen_attr 3965673657374801803\n"
+    },
+    "goose": {
+     "median": 0.06608775600034278,
+     "min": 0.06589170699953684,
+     "max": 0.06623261499953514,
+     "user": 0.061416,
+     "sys": 0.00402,
+     "maxrss_kb": 21408,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16803534\nsize 39 174\ncursor 38 0\nhistory 57\nhistory_text 5819565767479237678\nhistory_attr 4529729176837719461\nscreen_text 16511751771086170865\nscreen_attr 3965673657374801803\n"
+    }
+   }
+  },
+  {
+   "input": "vtebench_scrolling",
+   "bytes": 16777218,
+   "rows": {
+    "alacritty": {
+     "median": 0.17032499399829248,
+     "min": 0.16979845599962573,
+     "max": 0.1709922119989642,
+     "user": 0.15417799999999998,
+     "sys": 0.014974,
+     "maxrss_kb": 60456,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16777218\nsize 39 174\ncursor 38 0\nhistory 10000\nhistory_text 17084158550652861701\nhistory_attr 6744219726344980933\nscreen_text 3246143669575471169\nscreen_attr 8185496540351009663\n"
+    },
+    "libvterm": {
+     "median": 31.51762605699878,
+     "min": 31.449803573999816,
+     "max": 31.567402168000626,
+     "user": 31.432878,
+     "sys": 0.023915,
+     "maxrss_kb": 87012,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16777218\nsize 39 174\ncursor 38 0\nhistory 10000\nhistory_text 17084158550652861701\nhistory_attr 6744219726344980933\nscreen_text 3246143669575471169\nscreen_attr 8185496540351009663\n"
+    },
+    "goose": {
+     "median": 0.2149183669989725,
+     "min": 0.2137007530000119,
+     "max": 0.2157585739987553,
+     "user": 0.20848799999999998,
+     "sys": 0.0049689999999999995,
+     "maxrss_kb": 21704,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16777218\nsize 39 174\ncursor 38 0\nhistory 10000\nhistory_text 17084158550652861701\nhistory_attr 6744219726344980933\nscreen_text 3246143669575471169\nscreen_attr 8185496540351009663\n"
+    }
+   }
+  },
+  {
+   "input": "vtebench_scrolling_bottom_region",
+   "bytes": 16777218,
+   "rows": {
+    "alacritty": {
+     "median": 0.12148684700150625,
+     "min": 0.1211156729987124,
+     "max": 0.13365117899957113,
+     "user": 0.11688499999999999,
+     "sys": 0.0039889999999999995,
+     "maxrss_kb": 19264,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16777218\nsize 39 174\ncursor 37 0\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 3716840420767088022\nscreen_attr 8185496540351009663\n"
+    },
+    "libvterm": {
+     "median": 23.166137065998555,
+     "min": 23.029275808999955,
+     "max": 24.06398176499897,
+     "user": 23.117504,
+     "sys": 0.003974,
+     "maxrss_kb": 18852,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16777218\nsize 39 174\ncursor 37 0\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 3716840420767088022\nscreen_attr 8185496540351009663\n"
+    },
+    "goose": {
+     "median": 0.14922334000038973,
+     "min": 0.14854335199925117,
+     "max": 0.14968000399858283,
+     "user": 0.142981,
+     "sys": 0.004983,
+     "maxrss_kb": 21064,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16777218\nsize 39 174\ncursor 37 0\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 3716840420767088022\nscreen_attr 8185496540351009663\n"
+    }
+   }
+  },
+  {
+   "input": "vtebench_scrolling_bottom_small_region",
+   "bytes": 16777218,
+   "rows": {
+    "alacritty": {
+     "median": 0.29875476300003356,
+     "min": 0.2986545309995563,
+     "max": 0.30842208200010646,
+     "user": 0.294106,
+     "sys": 0.003986,
+     "maxrss_kb": 19280,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16777218\nsize 39 174\ncursor 18 0\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 5351890267811110969\nscreen_attr 8185496540351009663\n"
+    },
+    "libvterm": {
+     "median": 12.248001505999127,
+     "min": 12.199978896000175,
+     "max": 12.272932015999686,
+     "user": 12.228457,
+     "sys": 0.004966,
+     "maxrss_kb": 18852,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16777218\nsize 39 174\ncursor 18 0\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 5351890267811110969\nscreen_attr 8185496540351009663\n"
+    },
+    "goose": {
+     "median": 0.13956266900095216,
+     "min": 0.1382414379986585,
+     "max": 0.14048268599981384,
+     "user": 0.134844,
+     "sys": 0.004007999999999999,
+     "maxrss_kb": 20960,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16777218\nsize 39 174\ncursor 18 0\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 5351890267811110969\nscreen_attr 8185496540351009663\n"
+    }
+   }
+  },
+  {
+   "input": "vtebench_scrolling_fullscreen",
+   "bytes": 16778179,
+   "rows": {
+    "alacritty": {
+     "median": 0.19514372699995874,
+     "min": 0.19452912400083733,
+     "max": 0.19634819599923503,
+     "user": 0.177444,
+     "sys": 0.017813,
+     "maxrss_kb": 60436,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16778179\nsize 39 174\ncursor 38 0\nhistory 10000\nhistory_text 5570323299627163625\nhistory_attr 6744219726344980933\nscreen_text 11755270824827703379\nscreen_attr 8185496540351009663\n"
+    },
+    "libvterm": {
+     "median": 1.4623448940001254,
+     "min": 1.4597120190010173,
+     "max": 1.4643216879994725,
+     "user": 1.43346,
+     "sys": 0.024869,
+     "maxrss_kb": 86948,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16778179\nsize 39 174\ncursor 38 0\nhistory 10000\nhistory_text 5570323299627163625\nhistory_attr 6744219726344980933\nscreen_text 11755270824827703379\nscreen_attr 8185496540351009663\n"
+    },
+    "goose": {
+     "median": 0.06729300700135354,
+     "min": 0.06626400499953888,
+     "max": 0.06778383500022755,
+     "user": 0.060335999999999994,
+     "sys": 0.0060079999999999995,
+     "maxrss_kb": 32720,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16778179\nsize 39 174\ncursor 38 0\nhistory 10000\nhistory_text 5570323299627163625\nhistory_attr 6744219726344980933\nscreen_text 11755270824827703379\nscreen_attr 8185496540351009663\n"
+    }
+   }
+  },
+  {
+   "input": "vtebench_scrolling_top_region",
+   "bytes": 16777218,
+   "rows": {
+    "alacritty": {
+     "median": 0.4603357149990188,
+     "min": 0.45954582299964386,
+     "max": 0.46349618999920494,
+     "user": 0.455196,
+     "sys": 0.003975,
+     "maxrss_kb": 19244,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16777218\nsize 39 174\ncursor 38 0\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 3246143669575471169\nscreen_attr 8185496540351009663\n"
+    },
+    "libvterm": {
+     "median": 22.98503986200012,
+     "min": 22.981101541001408,
+     "max": 23.281611709000572,
+     "user": 22.939875,
+     "sys": 0.003975,
+     "maxrss_kb": 18912,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16777218\nsize 39 174\ncursor 38 0\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 3246143669575471169\nscreen_attr 8185496540351009663\n"
+    },
+    "goose": {
+     "median": 0.14710327200009488,
+     "min": 0.146761295000033,
+     "max": 0.14717109000048367,
+     "user": 0.14060499999999998,
+     "sys": 0.0058839999999999995,
+     "maxrss_kb": 21060,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16777218\nsize 39 174\ncursor 38 0\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 3246143669575471169\nscreen_attr 8185496540351009663\n"
+    }
+   }
+  },
+  {
+   "input": "vtebench_scrolling_top_small_region",
+   "bytes": 16777216,
+   "rows": {
+    "alacritty": {
+     "median": 0.279113206999682,
+     "min": 0.2782468000004883,
+     "max": 0.29660894100015867,
+     "user": 0.273443,
+     "sys": 0.003981999999999999,
+     "maxrss_kb": 19280,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16777216\nsize 39 174\ncursor 38 0\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 3246143669575471169\nscreen_attr 8185496540351009663\n"
+    },
+    "libvterm": {
+     "median": 13.383354081999641,
+     "min": 13.369465528001456,
+     "max": 13.406814836000194,
+     "user": 13.356771,
+     "sys": 0.003944,
+     "maxrss_kb": 18880,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16777216\nsize 39 174\ncursor 38 0\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 3246143669575471169\nscreen_attr 8185496540351009663\n"
+    },
+    "goose": {
+     "median": 0.13805302299988398,
+     "min": 0.13775283199902333,
+     "max": 0.14049222100038605,
+     "user": 0.134401,
+     "sys": 0.00399,
+     "maxrss_kb": 18936,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16777216\nsize 39 174\ncursor 38 0\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 3246143669575471169\nscreen_attr 8185496540351009663\n"
+    }
+   }
+  },
+  {
+   "input": "vtebench_sync_medium_cells",
+   "bytes": 16939923,
+   "rows": {
+    "alacritty": {
+     "median": 0.11310709499957738,
+     "min": 0.11231576099999074,
+     "max": 0.11363452299883647,
+     "user": 0.105844,
+     "sys": 0.005974999999999999,
+     "maxrss_kb": 23644,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16939923\nsize 39 174\ncursor 38 0\nhistory 54\nhistory_text 1612617618348913346\nhistory_attr 2851935567680648509\nscreen_text 16511751771086170865\nscreen_attr 3965673657374801803\n"
+    },
+    "libvterm": {
+     "median": 0.2667471860004298,
+     "min": 0.2663809069999843,
+     "max": 0.2671970110004622,
+     "user": 0.261762,
+     "sys": 0.003953,
+     "maxrss_kb": 19424,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16939923\nsize 39 174\ncursor 38 0\nhistory 54\nhistory_text 1612617618348913346\nhistory_attr 2851935567680648509\nscreen_text 16511751771086170865\nscreen_attr 3965673657374801803\n"
+    },
+    "goose": {
+     "median": 0.06698031200176047,
+     "min": 0.06681064099939249,
+     "max": 0.06712418899951444,
+     "user": 0.0615,
+     "sys": 0.0050219999999999996,
+     "maxrss_kb": 21352,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16939923\nsize 39 174\ncursor 38 0\nhistory 54\nhistory_text 1612617618348913346\nhistory_attr 2851935567680648509\nscreen_text 16511751771086170865\nscreen_attr 3965673657374801803\n"
+    }
+   }
+  },
+  {
+   "input": "vtebench_unicode",
+   "bytes": 16872364,
+   "rows": {
+    "alacritty": {
+     "median": 0.08694533400012006,
+     "min": 0.08662326500052586,
+     "max": 0.0878455819984083,
+     "user": 0.082341,
+     "sys": 0.004007999999999999,
+     "maxrss_kb": 19384,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16872364\nsize 39 174\ncursor 38 0\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 15972547915258189674\nscreen_attr 8185496540351009663\n"
+    },
+    "libvterm": {
+     "median": 0.43043346900049073,
+     "min": 0.4298367370010965,
+     "max": 0.4306675540010474,
+     "user": 0.42525999999999997,
+     "sys": 0.003978,
+     "maxrss_kb": 19008,
+     "ok": true,
+     "agrees": false,
+     "checksums": "bytes 16872364\nsize 39 174\ncursor 38 0\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 14362053770278098300\nscreen_attr 8185496540351009663\n"
+    },
+    "goose": {
+     "median": 0.09289454499958083,
+     "min": 0.09254564000002574,
+     "max": 0.09352531700096733,
+     "user": 0.087599,
+     "sys": 0.004999,
+     "maxrss_kb": 21212,
+     "ok": true,
+     "agrees": true,
+     "checksums": "bytes 16872364\nsize 39 174\ncursor 38 0\nhistory 0\nhistory_text 14695981039346656037\nhistory_attr 14695981039346656037\nscreen_text 15972547915258189674\nscreen_attr 8185496540351009663\n"
+    }
+   }
+  }
+ ]
+}

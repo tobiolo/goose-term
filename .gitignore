@@ -1,0 +1,5 @@
+.deps/
+.inputs/
+.out/
+baselines/alacritty_row/target/
+__pycache__/
