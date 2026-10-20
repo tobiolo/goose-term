@@ -1,0 +1,3 @@
+// The C under doomfire: the same terminal helpers as matrix.
+c_sources = ["../matrix/tty.c"];
+output = "doomfire";

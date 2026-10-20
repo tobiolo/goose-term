@@ -1,0 +1,24 @@
+gterm            27f3326 (this repository); opened at 174x39
+alacritty        alacritty 0.17.0 (94e7c887); opened at 174x39
+ghostty          Ghostty 1.3.1-arch2; opened at 174x39
+xfce4-terminal   xfce4-terminal 1.2.0 (Xfce 4.21); opened at 174x39
+run 1 gterm            cat    124 ms   fire  1156.3 fps   idle   42.4 MB,   4.0% cpu   after cat   46.9 MB
+run 1 alacritty        cat    187 ms   fire  1185.3 fps   idle   73.1 MB,   0.0% cpu   after cat  113.7 MB
+run 1 ghostty          cat    257 ms   fire   582.1 fps   idle  148.9 MB,   0.3% cpu   after cat  160.7 MB
+run 1 xfce4-terminal   cat    289 ms   fire   671.5 fps   idle   60.0 MB,   0.0% cpu   after cat   62.3 MB
+run 2 gterm            cat    115 ms   fire  1148.1 fps   idle   42.5 MB,   4.0% cpu   after cat   47.0 MB
+run 2 alacritty        cat    196 ms   fire  1185.2 fps   idle   74.1 MB,   0.0% cpu   after cat  113.6 MB
+run 2 ghostty          cat    281 ms   fire   608.9 fps   idle  149.5 MB,   0.3% cpu   after cat  160.9 MB
+run 2 xfce4-terminal   cat    297 ms   fire   676.7 fps   idle   60.1 MB,   0.0% cpu   after cat   64.3 MB
+run 3 gterm            cat    131 ms   fire  1170.6 fps   idle   42.9 MB,   4.0% cpu   after cat   47.0 MB
+run 3 alacritty        cat    202 ms   fire  1173.8 fps   idle   72.9 MB,   0.0% cpu   after cat  113.5 MB
+run 3 ghostty          cat    272 ms   fire   593.8 fps   idle  148.7 MB,   0.3% cpu   after cat  160.5 MB
+run 3 xfce4-terminal   cat    297 ms   fire   672.0 fps   idle   60.5 MB,   0.0% cpu   after cat   62.7 MB
+run 4 gterm            cat    119 ms   fire  1167.2 fps   idle   42.5 MB,   4.3% cpu   after cat   47.0 MB
+run 4 alacritty        cat    183 ms   fire  1185.0 fps   idle   74.9 MB,   0.0% cpu   after cat  113.8 MB
+run 4 ghostty          cat    245 ms   fire   589.9 fps   idle  149.3 MB,   0.7% cpu   after cat  159.5 MB
+run 4 xfce4-terminal   cat    306 ms   fire   679.3 fps   idle   60.2 MB,   0.0% cpu   after cat   61.3 MB
+run 5 gterm            cat    122 ms   fire  1173.7 fps   idle   43.1 MB,   4.0% cpu   after cat   47.3 MB
+run 5 alacritty        cat    214 ms   fire  1198.7 fps   idle   73.1 MB,   0.0% cpu   after cat  114.0 MB
+run 5 ghostty          cat    252 ms   fire   608.5 fps   idle  149.8 MB,   0.7% cpu   after cat  161.4 MB
+run 5 xfce4-terminal   cat    316 ms   fire   659.5 fps   idle   60.0 MB,   0.0% cpu   after cat   62.2 MB

@@ -7,6 +7,8 @@ RUNS=5
 [ "${1:-}" = --runs ] && RUNS=$2
 B=$OUT/bin
 cd "$ROOT"
+log "the core's interactive parts (replies, titles, resize)"
+"$B/interactive"
 log "conformance: goose against alacritty, whole input and in 7-byte chunks"
 python3 -I tests/diff.py "$B/alacritty_row" "$B/vt_goose" -- "$OUT"/cases/* "$INPUTS"/* | tail -1
 python3 -I tests/diff.py --chunk 7 "$B/alacritty_row" "$B/vt_goose" -- "$OUT"/cases/* "$INPUTS"/* | tail -1

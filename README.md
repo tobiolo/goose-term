@@ -8,7 +8,7 @@ terminal output, in the style of
 inputs taken from [vtebench](https://github.com/alacritty/vtebench) and
 [terminal-benchmark](https://github.com/vizenc/terminal-benchmark).
 
-A GUI front end is planned. This repository is the core and its benchmarks.
+It also has a terminal window around the core, [gterm](#gterm-the-window).
 
 ## Results
 
@@ -72,6 +72,94 @@ callgrind profile showed two costs, both fixed:
   of where its content ends, which the hot writers raise as they write.
 - Clearing a new row wrote 174 cells one by one. Cells past `used` are
   already blank, so a reset now clears only `[0, used)`.
+
+## gterm, the window
+
+![gterm running vim on core/vt.goose](docs/gterm.png)
+
+`gui/gterm.goose` (about 950 lines) is a terminal emulator built on the core
+and Goose's `gfx` package (SDL3's GPU API):
+
+- **Shell:** your shell runs on a pty (`gui/pty.c`, `forkpty`).
+- **Drawing:** every frame draws the screen as one instanced quad per
+  cell. The fragment shader blends the cell's glyph over its background.
+  Glyphs come from a monospace TrueType font that `ui` (Nuklear's
+  stb_truetype) bakes into an atlas: DejaVu Sans Mono or Liberation Mono,
+  with bold.
+- **Box drawing and blocks** (U+2500-U+259F) are drawn as rectangles
+  rather than glyphs, so lines join from cell to cell. The table of their
+  arms is generated from the Unicode names (`gui/gen_box.py`).
+- **Colors and text:** 256 colors and truecolor; bold, dim, underline,
+  strikeout, reverse and hidden; the block, underline and bar cursors.
+- **Keys:** keys are sent as xterm sends them: application cursor mode,
+  modifier forms like `ESC[1;5D`, function keys, Ctrl and Alt combinations.
+- **Mouse and scrolling:** mouse reporting (1000/1002/1003, SGR 1006),
+  focus events, bracketed paste and the window title. The wheel scrolls
+  the scrollback, or sends arrow keys on the alternate screen.
+- **Resizing** keeps each row's cells from the left. Rows are not
+  reflowed.
+
+Its own keys: Shift+PageUp/PageDown/Home/End scroll back; drag with the
+left button to select, then Ctrl+Shift+C copies; Ctrl+Shift+V or
+Shift+Insert pastes; Ctrl+= / Ctrl+- / Ctrl+0 change the font size.
+
+```bash
+bin/build-gui        # after bin/build-all; fetches and builds the gfx package once
+.out/bin/gterm [--font FILE.ttf] [--size PX] [--shell PATH]
+```
+
+The core's interactive parts (replies to DSR and DA, OSC titles, mouse
+modes, resize) are tested by `tests/interactive.goose`. They leave the
+screen as it was, so the benchmark rows still agree, at the same speed.
+`gterm --type TEXT --keys K,K --seconds N --shot FILE.png`, run with
+`GOOSE_GFX_HEADLESS=1`, drives the window without a display. That is how
+the screenshot above was made.
+
+`examples/matrix/` is a Goose program to run in it: the Matrix's digital
+rain in 24-bit color. It writes only the cells whose shade changed each
+frame and quits on any key. `bin/build-gui` builds it as
+`.out/bin/matrix`. Its `--kana` option rains half-width katakana, as in
+the film, for a font that has them.
+
+![matrix running in gterm](docs/matrix.png)
+
+Not there yet:
+- no reflow on resize;
+- no italic font;
+- no font fallback for CJK and emoji, which show as `?`;
+- zero-width marks are not drawn;
+- idle, it still wakes 60 times a second for window events, which costs
+  about 4% of a core.
+
+## gterm against other terminals
+
+`bin/run-gui` runs vizenc/terminal-benchmark's three tests in real
+windows, with gterm and the terminal emulators installed here: alacritty
+0.17.0, Ghostty 1.3.1 and xfce4-terminal 1.2.0 (X11, Intel Iris Xe). Each
+window is 174x39 cells of DejaVu Sans Mono 12 pt, started with no user
+configuration. The terminals take turns, 5 runs each; the medians are
+below, and every run is in [results/GUI.md](results/GUI.md).
+
+| terminal | `cat` 11 MB, ms | DOOM-fire, fps | idle RSS, MB | RSS after `cat`, MB | idle CPU |
+|---|---:|---:|---:|---:|---:|
+| gterm | **122** | 1167 | **42.5** | **47.0** | 4.0% |
+| alacritty | 196 | **1185** | 73.1 | 113.7 | **0.0%** |
+| Ghostty | 257 | 594 | 149.3 | 160.7 | 0.3% |
+| xfce4-terminal | 297 | 672 | 60.1 | 62.3 | **0.0%** |
+
+- **`cat`** is the time `cat shakespeare.txt` takes inside the terminal,
+  as timed by the shell around it. It is how fast the terminal reads its
+  pty, not when the text is all on the screen.
+- **DOOM-fire** is `examples/doomfire`, a Goose port of DOOM-fire-zig
+  that writes the same frames. Its frame rate is how fast the terminal
+  takes the frames in. On a bare pty, with nothing drawing, it makes
+  about 2460 fps, so here the terminals are the limit.
+- **Memory** is the terminal process's VmRSS: 5 s after start, and after
+  the same `cat`. It counts shared libraries and not GPU memory. The
+  scrollback each keeps differs: 10000 lines for gterm and alacritty,
+  Ghostty's default byte limit, xfce4-terminal's 1000 lines.
+- **Input latency**, terminal-benchmark's fourth test, is not measured:
+  it needs a camera filming the screen.
 
 ## The rows
 
@@ -142,6 +230,8 @@ checksums differ.
 bin/fetch-inputs     # vtebench, terminal-benchmark, the 15 inputs (about 255 MB)
 bin/build-all        # goose @ 1e31b6d, libvterm @ v0.3.3, the three rows
 bin/run-all          # conformance, then 5 timed runs: results/
+bin/build-gui        # gterm, matrix and doomfire
+bin/run-gui          # the GUI tests, in windows on the display: results/GUI.md
 ```
 
 Needs git, cmake, gcc, cargo, python3 and perl. libvterm needs about
@@ -151,15 +241,19 @@ Needs git, cmake, gcc, cargo, python3 and perl. libvterm needs about
 
 - `core/`: the Goose terminal core, its benchmark harness, and the width
   table (`width.bin`, generated from unicode-width 0.2.2 by `gen_width.py`).
+- `gui/`: gterm, its pty layer in C, and the box drawing table.
+- `examples/matrix/`: digital rain, a Goose program for the terminal.
+- `examples/doomfire/`: the DOOM-fire frame-rate test, in Goose.
 - `baselines/`: the alacritty and libvterm rows.
 - `inputs/`: input generators and checksums.
 - `tests/`: conformance cases, the diff tool and the dump spec.
-- `scripts/`: the benchmark runner and the table script.
+- `scripts/`: the benchmark runners (CLI and GUI) and their table scripts.
 - `bin/`: the scripts to fetch, build and run.
 
 Third-party code and licenses are listed in [THIRD_PARTY.md](THIRD_PARTY.md).
 
 ## License
 
-Apache-2.0 ([LICENSE](LICENSE)), except `inputs/doomfire.py`, which follows
-DOOM-fire-zig and is GPL-3.0-or-later (see [THIRD_PARTY.md](THIRD_PARTY.md)).
+Apache-2.0 ([LICENSE](LICENSE)), except `inputs/doomfire.py` and
+`examples/doomfire/doomfire.goose`, which follow DOOM-fire-zig and are
+GPL-3.0-or-later (see [THIRD_PARTY.md](THIRD_PARTY.md)).

@@ -31,6 +31,7 @@ gcc -O2 -DNDEBUG -I"$V/include" "$ROOT/baselines/libvterm_row.c" "$V/build/libvt
 cargo build -q --release --manifest-path "$ROOT/baselines/alacritty_row/Cargo.toml"
 cp "$ROOT/baselines/alacritty_row/target/release/alacritty_row" "$OUT/bin/"
 "$GOOSE" build "$ROOT/core/vt_row.goose" -O2 --cc gcc -o "$OUT/bin/vt_goose" > /dev/null
+"$GOOSE" build "$ROOT/tests/interactive.goose" -O2 --cc gcc -o "$OUT/bin/interactive" > /dev/null
 
 python3 -I "$ROOT/tests/cases.py" "$OUT/cases"
 log "built $OUT/bin: $(ls "$OUT/bin" | tr '\n' ' ')"

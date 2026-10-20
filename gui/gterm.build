@@ -1,0 +1,4 @@
+// The C under gterm: the pty and the shell on it.
+c_sources = ["pty.c"];
+c_libs_linux = ["util"];
+output = "gterm";

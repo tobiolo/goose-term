@@ -103,6 +103,15 @@ var cursor_shape = 0;
 var app_cursor = false;
 var bracketed_paste = false;
 
+// What an interactive front end needs and the screen does not: none of it
+// changes a cell, so the benchmark rows never look at it.
+var replies: u8[>..] = [];      // answers to DSR and DA, for the front end to send back
+var title: u8[>..] = [];        // OSC 0 and 2
+var title_changed = false;
+var mouse_mode = 0;             // 1000 (clicks), 1002 (drags) or 1003 (all motion), 0 off
+var sgr_mouse = false;          // 1006
+var focus_events = false;       // 1004
+
 // The pen as a style id, and the style of erased cells (the pen's background
 // only), each worked out when first needed after the pen changes.
 var pen_id: u16 = 0;
@@ -651,6 +660,79 @@ fn reset_state() {
     cursor_visible = true;
     app_cursor = false;
     bracketed_paste = false;
+    mouse_mode = 0;
+    sgr_mouse = false;
+    focus_events = false;
+}
+
+// A new size for both screens, as a window resize asks. Rows keep their
+// cells from the left, cut or padded; nothing is reflowed. When the screen
+// loses rows below its cursor's, they go; when it loses them above, the top
+// rows go instead, into the scrollback on the primary screen. The
+// scrollback keeps its lines as they are, and a front end shows each cut to
+// the new width.
+fn resize(c: i64, r: i64) {
+    assert(c >= 2 && r > 0 && c <= 65535);
+    guard c != cols || r != nrows;
+    let was_alt = alt();
+    if was_alt { swap(cur, icur); scr = 0; }
+    // cur is now the primary screen's cursor and icur the alternate one's.
+    var shift: i64[2] = [0, 0];
+    if r < nrows {
+        shift[0] = max(cur.y - (r - 1), 0);
+        shift[1] = max(icur.y - (r - 1), 0);
+    }
+    for y in shift[0] { push_history(y); }
+    var old: Cell[>..] = [];
+    for k in 2 {
+        scr = k * nrows;
+        for y in nrows { old.append(peek(y)); }
+    }
+    scr = 0;
+    let oc = cols;
+    let orows = nrows;
+    cols = c;
+    nrows = r;
+    cells.resize(0);
+    cells.resize(2 * r * c, Cell { cp: 0, style: 0 });
+    rowmap.resize(0);
+    for i in 2 * r { rowmap.push(i); }
+    used.resize(0);
+    used.resize(2 * r, c);
+    blank_row.resize(0);
+    blank_row.resize(c, Cell { cp: 0, style: 0 });
+    blank_row_style = 0;
+    tabs.resize(0);
+    tabs.resize(c, false);
+    default_tabs();
+    top = 0;
+    bot = r;
+    let w = min(c, oc);
+    for k in 2 {
+        for y in min(r, orows - shift[k]) {
+            let src = old[(k * orows + y + shift[k]) * oc..];
+            let dst = cells[(k * r + y) * c..];
+            copy_into(dst[..w], src[..w]);
+            if w < oc && dst[w - 1].cp & F_WIDE != 0 { dst[w - 1] = Cell { cp: 0, style: 0 }; }
+            if w == oc && c > oc { dst[w - 1].cp &= ~F_LEAD; }
+        }
+    }
+    cur.y -= shift[0];
+    icur.y -= shift[1];
+    saved[0].y -= shift[0];
+    saved[1].y -= shift[1];
+    clamp_cursor(cur);
+    clamp_cursor(icur);
+    clamp_cursor(saved[0]);
+    clamp_cursor(saved[1]);
+    if was_alt { swap(cur, icur); scr = nrows; }
+    pen_changed();
+}
+
+fn clamp_cursor(k: Cursor&) {
+    k.y = max(min(k.y, nrows - 1), 0);
+    k.x = max(min(k.x, cols - 1), 0);
+    k.wrap = false;
 }
 
 fn decaln() {
@@ -671,6 +753,11 @@ fn set_private_mode(m: u16, on: bool) {
         25 => { cursor_visible = on; },
         1049 => { if on != alt() { swap_alt(); } },
         2004 => { bracketed_paste = on; },
+        1000, 1002, 1003 => {
+            if on { mouse_mode = m; } else if mouse_mode == m { mouse_mode = 0; }
+        },
+        1004 => { focus_events = on; },
+        1006 => { sgr_mouse = on; },
         _ => {},
     }
 }
@@ -941,6 +1028,16 @@ fn csi_dispatch(b: u8) {
             'u' => restore_cursor(),
             'X' => erase_chars(next_or(1)),
             'Z' => backward_tabs(next_or(1)),
+            'c' => { if next_or(0) == 0 { reply_csi("?6c"); } },
+            'n' => {
+                let m = next_or(0);
+                if m == 5 { reply_csi("0n"); }
+                if m == 6 {
+                    replies.push(0x1B);
+                    replies.push('[');
+                    format(replies, cur.y + 1, ";", cur.x + 1, "R");
+                }
+            },
             _ => {},
         }
         return;
@@ -954,10 +1051,33 @@ fn csi_dispatch(b: u8) {
         }
         return;
     }
+    if ni == 1 && i0 == '>' && b == 'c' {
+        if next_or(0) == 0 { reply_csi(">0;2600;1c"); }
+        return;
+    }
     if ni == 1 && i0 == ' ' && b == 'q' {
         let s = next_or(0);
         if s <= 6 { cursor_shape = s; }
     }
+}
+
+fn reply_csi(s: const u8[:]) {
+    replies.push(0x1B);
+    replies.push('[');
+    replies.append(s);
+}
+
+// --- OSC ---------------------------------------------------------------------------------------
+
+let OSC_MAX = 4096;
+var osc: u8[>..] = [];
+
+// The end of an OSC string: a title is all the front end takes from one.
+fn osc_end() {
+    guard osc.len >= 2 && osc[1] == ';' && (osc[0] == '0' || osc[0] == '2');
+    title.resize(0, 0);
+    title.append(osc[2..]);
+    title_changed = true;
 }
 
 // --- feeding bytes ---------------------------------------------------------------------------
@@ -973,7 +1093,7 @@ fn step(b: u8) {
             else if b == 0x50 { reset_params(); state = DCS_ENTRY; }
             else if b == 0x58 || b == 0x5E || b == 0x5F { state = SOS; }
             else if b == 0x5B { reset_params(); state = CSI_ENTRY; }
-            else if b == 0x5D { state = OSC; }
+            else if b == 0x5D { osc.resize(0, 0); state = OSC; }
             else if b <= 0x7E { esc_dispatch(b); state = GROUND; }
         },
         ESC_INT => {
@@ -1048,9 +1168,10 @@ fn step(b: u8) {
             else if b == 0x9C { state = GROUND; }
         },
         OSC => {
-            if b == 0x07 { state = GROUND; }
+            if b == 0x07 { osc_end(); state = GROUND; }
             else if b == 0x18 || b == 0x1A { execute(b); state = GROUND; }
-            else if b == 0x1B { reset_params(); state = ESCAPE; }
+            else if b == 0x1B { osc_end(); reset_params(); state = ESCAPE; }
+            else if b >= 0x20 && osc.len < OSC_MAX { osc.push(b); }
         },
         _ => anywhere(b),          // DCS_IGNORE, SOS
     }

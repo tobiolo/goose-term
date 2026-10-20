@@ -1,0 +1,12 @@
+#!/bin/bash
+# Build gterm, the terminal window, into $OUT/bin. The first build fetches
+# the gfx package (SDL3 and Nuklear) at the commit gui/gterm.goose pins and
+# builds it with cmake, which takes a minute; it needs SDL3's build
+# dependencies (the X11 or Wayland development headers).
+set -euo pipefail
+source "$(dirname "$0")/env.sh"
+mkdir -p "$OUT/bin"
+[ -x "$GOOSE" ] || { echo "no goose at $GOOSE: run bin/build-all first" >&2; exit 1; }
+"$GOOSE" build "$ROOT/gui/gterm.goose" -O2 --cc gcc -o "$OUT/bin/gterm"
+"$GOOSE" build "$ROOT/examples/matrix/matrix.goose" -O2 --cc gcc -o "$OUT/bin/matrix"
+"$GOOSE" build "$ROOT/examples/doomfire/doomfire.goose" -O2 --cc gcc -o "$OUT/bin/doomfire"

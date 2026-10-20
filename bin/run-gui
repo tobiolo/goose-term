@@ -1,0 +1,14 @@
+#!/bin/bash
+# The GUI benchmarks: gterm and the terminal emulators installed here, in
+# real windows on the display: results/gui.json and results/GUI.md.
+#   bin/run-gui [--runs N]   (default 5; about two minutes a run)
+set -euo pipefail
+source "$(dirname "$0")/env.sh"
+RUNS=5
+[ "${1:-}" = --runs ] && RUNS=$2
+cd "$ROOT"
+[ -x "$OUT/bin/gterm" ] && [ -x "$OUT/bin/doomfire" ] || { echo "run bin/build-gui first" >&2; exit 1; }
+log "GUI benchmarks, $RUNS runs: windows will open and close on the display"
+python3 -I scripts/gui_bench.py --out results/gui.json --runs "$RUNS"
+python3 -I scripts/gui_table.py results/gui.json > results/GUI.md
+log "wrote results/GUI.md"
